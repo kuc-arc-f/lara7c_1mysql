@@ -7,6 +7,7 @@ Route::get('/', function () {
 });
 
 Route::resource('tasks', 'TasksController');
+Route::resource('test_auth', 'TestAuthController');
 
 /**************************************
  * API
@@ -20,3 +21,5 @@ Route::prefix('api')->group(function(){
   Route::post('/apitasks/get_item', 'ApiTasksController@get_item');
 });
 
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');

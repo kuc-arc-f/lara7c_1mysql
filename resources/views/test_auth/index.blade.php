@@ -1,16 +1,14 @@
-@extends('layouts.app_react')
-@section('title', 'タスク一覧')
+@extends('layouts.app_layout')
+@section('title', '')
 
 @section('content')
 
-<div class="panel panel-default" style="margin-top: 16px;">
-  <div class="panel-heading">
-    <div class="row">
-      <div class="col-sm-6"><h3>Tasks - index</h3>
-      </div>
-      <div class="col-sm-6" style="text-align: right;">
-        <a class="btn btn-primary" href="/tasks/create">New</a>
-      </div>
+<div class="container" >
+  <div class="row" style="margin-top: 16px;">
+    <div class="col-sm-6"><h3>Tasks - index</h3>
+    </div>
+    <div class="col-sm-6" style="text-align: right;">
+      <a class="btn btn-primary" href="/">New</a>
     </div>
   </div>
   <div id="app"></div>    
@@ -52,18 +50,6 @@ console.log(data );
   render(){
     return (
     <div>
-      <table className="table table-hover">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {this.tabRow()}
-        </tbody>
-      </table> 
       <hr />
     </div>
     )
