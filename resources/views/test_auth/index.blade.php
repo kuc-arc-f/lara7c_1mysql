@@ -5,10 +5,9 @@
 
 <div class="container" >
   <div class="row" style="margin-top: 16px;">
-    <div class="col-sm-6"><h3>Tasks - index</h3>
+    <div class="col-sm-6"><h3>Test -auth</h3>
     </div>
     <div class="col-sm-6" style="text-align: right;">
-      <a class="btn btn-primary" href="/">New</a>
     </div>
   </div>
   <div id="app"></div>    
@@ -26,7 +25,7 @@ class List extends React.Component {
     }
   }
   componentDidMount(){
-      this.get_items(PAGE);
+//      this.get_items(PAGE);
   }
   get_items(page){
     axios.get("/api/apitasks/get_tasks?page="+ page ).then(res =>  {
@@ -51,6 +50,16 @@ console.log(data );
     return (
     <div>
       <hr />
+      <p>Icon :</p>
+      <div class="icon_wrap">
+        <i class="bi bi-alarm ml-2 mr-2"></i>
+        <i class="bi bi-book ml-2 mr-2"></i>
+        <i class="bi bi-calendar ml-2 mr-2"></i>
+        <i class="bi bi-folder ml-2 mr-2"></i>
+        <i class="bi bi-forward ml-2 mr-2"></i>
+        <i class="bi bi-house-fill ml-2 mr-2"></i>
+      </div>
+      <hr />
     </div>
     )
   }
@@ -58,6 +67,10 @@ console.log(data );
 ReactDOM.render(<List />, document.getElementById('app'));
 </script>
 <style>
+.icon_wrap{ font-size: 2rem;  }
+/*
+.icon_wrap i { margin: 10px 10px; }
+*/
 .p_tbl_task_name{ font-size: 1.2rem; }
 .task-table td{ padding : 8px;}
 .task-table  td i {font-size : 1.2rem; }

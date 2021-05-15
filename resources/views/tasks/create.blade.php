@@ -1,53 +1,77 @@
 
-@extends('layouts.app_react')
-
+@extends('layouts.app_layout')
 @section('title', '新規作成')
 
 @section('content')
-  <div class="panel panel-default">
-      <br />
-      <div class="panel-heading">
-          <br />
-          <br />
-          <!-- class="mt-10" -->
-          <h3 >新規作成</h3>
+<div id="app"></div>
+<!-- -->
+<script type="text/babel">
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {title: '', content: ''}
+  }
+  handleChangeTitle(e){
+    this.setState({title: e.target.value})
+  }
+  handleChangeContent(e){
+    this.setState({content: e.target.value})
+  }
+  handleClick(){
+    console.log("#-handleClick")
+    this.add_item()
+  }
+  async add_item(){
+    try {
+      var item = {
+        title: this.state.title,
+        content: this.state.content,
+      }
+      const res = await axios.post(
+        '/api/tasks/new', item 
+      )
+//console.log( res.data )
+      window.location.href="/tasks"
+    } catch (error) {
+      alert("Error, save item")
+      console.error(error);
+    }
+  }  
+  render() {
+    return (
+    <div className="container">
+      <a href="/tasks" className="btn btn-outline-primary mt-2">Back</a>
+      <hr className="mt-2 mb-2" />
+      <h1 className="mt-2">Create - Task</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Title:</label>
+            <input type="text" className="form-control"
+            onChange={this.handleChangeTitle.bind(this)}/>
+          </div>
+        </div>
       </div>
-      <hr />
-  @if (count($errors) > 0)
-    <div class="alert alert-danger">
-    <ul>
-    @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-    </ul>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Content:</label>
+            <input type="text" className="form-control"
+              onChange={this.handleChangeContent.bind(this)}/>
+          </div>
+        </div>
+      </div><br />
+      <div className="form-group">
+        <button className="btn btn-primary"
+         onClick={this.handleClick.bind(this)}>Create
+        </button>
+      </div>
+    
     </div>
-  @endif
-      <div class="panel-body">
-          <form action="/tasks" method="POST">
-              @method('POST')
-              @csrf
-              <div class="form-group">
-                  <label for="title" class="col-sm-3 control-label">title</label>
-                  <div class="col-sm-6">
-                      <input id="task-title" class="form-control" required="required" name="title" type="text">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="content" class="col-sm-3 control-label">content</label>
-                  <div class="col-sm-6">
-                      <input id="task-content" class="form-control" name="content" type="text">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <div class="col-sm-offset-3 col-sm-6">
-                      <input class="btn btn-primary" type="submit" value="保存">
-                  </div>
-              </div>
-          </form>
-      </div>
-      <hr />
-      <br />
-      <div class="panel-footer">
-      </div>
-  </div>
+    )
+  }  
+
+}
+ReactDOM.render(<Page />, document.getElementById('app'));
+</script>
 @endsection

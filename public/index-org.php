@@ -6,9 +6,7 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
- //helper
- include('./helper.php');
- 
+
 define('LARAVEL_START', microtime(true));
 
 /*

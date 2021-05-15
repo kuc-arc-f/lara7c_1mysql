@@ -1,4 +1,4 @@
-@extends('layouts.app_layout')
+@extends('layouts.app_react')
 
 @section('title', "" )
 
@@ -6,7 +6,7 @@
 <div id="app"></div>
 <!-- -->
 <script type="text/babel">
-var task_id= "{{$task_id}}";
+var book_id= "{{$book_id}}";
 
 class Show extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ console.log(this.id)
     var task = {
         id: id,
     };         
-    const res = await axios.get('/api/tasks/show?id=' + id)
+    const res = await axios.get('/api/books/show?id=' + id)
     var dat = res.data
 console.log( dat )
     this.setState({ 
@@ -34,7 +34,7 @@ console.log( dat )
   }    
   render(){
     return (
-    <div class="container">
+    <div>
       <h1>Show</h1>
       <hr />
       <h1>title : {this.state.title}</h1>
@@ -43,7 +43,7 @@ console.log( dat )
     )
   }
 }
-ReactDOM.render(<Show id={task_id}  />, document.getElementById('app'));
+ReactDOM.render(<Show id={book_id}  />, document.getElementById('app'));
 </script>
 
 @endsection

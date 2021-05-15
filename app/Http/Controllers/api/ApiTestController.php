@@ -1,10 +1,11 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Task;
 //
-class ApiTasksController extends Controller
+class ApiTestController extends Controller
 {
   /**************************************
    *
@@ -15,7 +16,7 @@ class ApiTasksController extends Controller
   /**************************************
    *
    **************************************/
-  public function get_tasks()
+  public function index()
   {   
 //exit();
     $todos = Task::orderBy('id', 'desc')
@@ -23,6 +24,15 @@ class ApiTasksController extends Controller
     ->get();
     return response()->json($todos);
   }
+  /**************************************
+   *
+   **************************************/
+  public function test1()
+  {   
+var_dump("test");
+exit();
+//    return response()->json($todos);
+  }  
   /**************************************
    *
    **************************************/  

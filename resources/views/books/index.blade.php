@@ -4,17 +4,10 @@
 @section('content')
 
 <div class="container" style="margin-top: 16px;">
-  <div class="row">
-    <div class="col-sm-6"><h3>Tasks - index</h3>
-    </div>
-    <div class="col-sm-6" style="text-align: right;">
-      <a class="btn btn-primary" href="/tasks/create">New</a>
-    </div>
-  </div>
   <div id="app"></div>    
 </div>
 <!-- -->
-<script type="text/babel" src="/js/component/Tasks/IndexRow.js?a1" ></script>
+<script type="text/babel" src="/js/component/Books/IndexRow.js?a1" ></script>
 <script type="text/babel">
  var PAGE= {{$page}};
 
@@ -29,10 +22,10 @@ class List extends React.Component {
       this.get_items(PAGE);
   }
   get_items(page){
-    axios.get("/api/tasks/list?page="+ page ).then(res =>  {
+    axios.get("/api/books/list?page="+ page ).then(res =>  {
       var data = res.data
       var items = data.docs
-console.log(data.page_item.paginate_disp );
+console.log(data );
       this.setState({
         data: items, paginate_disp: data.page_item.paginate_disp
       })
@@ -49,7 +42,7 @@ console.log(data.page_item.paginate_disp );
   dispPagenate(){
 //console.log(this.state.paginate_disp)
     if(this.state.paginate_disp === 1){
-      var url = "/tasks?page="
+      var url = "/books?page="
       return(
       <div className="paginate_wrap">
         <div className="btn-group" role="group" aria-label="Basic example">
@@ -63,6 +56,13 @@ console.log(data.page_item.paginate_disp );
   render(){
     return (
     <div>
+      <div className="row">
+        <div className="col-sm-6"><h3>Books - index</h3>
+        </div>
+        <div className="col-sm-6">
+          <a className="btn btn-primary" href="/books/create">New</a>
+        </div>        
+      </div>
       <table className="table table-hover">
         <thead>
         <tr>

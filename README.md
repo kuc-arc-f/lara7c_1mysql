@@ -6,11 +6,11 @@
 
  date    : 2021/05/10
 
- update : 2021/05/11
+ update : 2021/05/15
 
 ***
 
-Laravel 7 + mysql , CRUD sample
+Laravel 7 + mysql + React.js , CRUD sample
 
 ***
 ### Setup

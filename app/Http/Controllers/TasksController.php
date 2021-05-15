@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
-//use App\Libs\LibPagenate;
+use App\Libs\LibPagenate;
 //
 class TasksController extends Controller
 {
@@ -15,16 +15,22 @@ class TasksController extends Controller
    *
    **************************************/
   public function __construct(){
+    $this->middleware('auth');
   }
   /**************************************
    *
    **************************************/
   public function index()
   {
-//var_dump("#index");
 //exit();
+    $page = 1;
+    if(isset($_GET['page'])){
+      $page = $_GET['page'];
+    }
     $tasks = Task::orderBy('id', 'desc')->paginate(10 );
-    return view('tasks/index')->with('tasks', $tasks);
+    return view('tasks/index')->with([
+      'tasks', $tasks , 'page' => $page,
+    ]);
   }    
   /**************************************
    *
@@ -103,17 +109,31 @@ class TasksController extends Controller
    *
    **************************************/
   public function test1(){
-//var_dump("#test1");
+    /*
       $LibPagenate = new LibPagenate();
       $LibPagenate->init();
       $ret = $LibPagenate->get_page_start(1);
 print_r($ret);
+    */
       exit();
       /*
       print_r($result );
       print_r($result["_id"] );
       print_r($result["title"] );        
       */
+  }
+  /**************************************
+   *
+   **************************************/
+  public function test(){
+    $LibPagenate = new LibPagenate();
+    $LibPagenate->init();
+    $ret = $LibPagenate->get_page_start(1);
+    print_r($ret);
+    /*
+    */
+    return view('tasks/test')->with('task_id', 0);
+    exit();
   }
 
 }

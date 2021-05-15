@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }} 123
+            {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -10,11 +10,29 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">Master</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/category">Category</a>
+                    <a class="dropdown-item" href="/tags">Tags</a>
+                </div><!-- ./dropdown-menu -->
+              </li>
+              <!--
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">develop</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/cms_post">Cms</a>
+                    <a class="dropdown-item" href="/cms_category">CmsCategory</a>
+                </div>
+              </li>
+              -->
               <li class="nav-item">
-                <a class="nav-link" href="/">Link</a>
+                <a class="nav-link" href="/tasks">Task</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/">Link</a>
+                <a class="nav-link" href="/books">Book</a>
               </li>              
             </ul>
             <!-- Right Side Of Navbar -->

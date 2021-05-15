@@ -1,58 +1,126 @@
-@extends('layouts.app_react')
+@extends('layouts.app_layout')
 
 @section('title', "")
 
 @section('content')
+<div id="app"></div>
+<!-- -->
+<script type="text/babel">
+var ID = {{$task_id}};
 
-<div class="panel panel-default">
-    <br />
-    <div class="panel-heading">
-       <br />
-       <br />
-       <h3>編集</h3>
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {title: '', content: ''}
+  }
+  componentDidMount(){
+    this.get_item(ID);
+  }
+  handleChangeTitle(e){
+    this.setState({title: e.target.value})
+  }
+  handleChangeContent(e){
+    this.setState({content: e.target.value})
+  }
+  handleClick(){
+    console.log("#-handleClick")
+    this.update_item(ID)
+  }
+  handleClickDelete(){
+    console.log("#-handleClick")
+    this.delete_item(ID)
+  }
+  async delete_item(id){
+    try {
+      var item = {
+        id: id,
+      }
+      const res = await axios.post(
+        '/api/tasks/delete', item 
+      )
+console.log( res.data )
+      window.location.href="/tasks"
+    } catch (error) {
+      alert("Error, save item")
+      console.error(error);
+    }
+  }   
+  async update_item(id){
+    try {
+      var item = {
+        id: id,
+        title: this.state.title,
+        content: this.state.content,
+      }
+      const res = await axios.post(
+        '/api/tasks/update', item 
+      )
+console.log( res.data )
+      window.location.href="/tasks"
+    } catch (error) {
+      alert("Error, save item")
+      console.error(error);
+    }
+  }   
+  async get_item(id){
+    try {
+      const res = await axios.get('/api/tasks/show?id=' + id)
+console.log( res.data )
+      var data = res.data;
+      this.setState({ 
+        title: data.title, 
+        content: data.content
+      });       
+    } catch (error) {
+      alert("Error, save item")
+      console.error(error);
+    }
+  }  
+  render() {
+    return (
+    <div className="container">
+      <a href="/tasks" className="btn btn-outline-primary mt-2">Back</a>
+      <hr className="mt-2 mb-2" />
+      <h1 className="mt-2">編集 - Task</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Title:</label>
+            <input type="text" className="form-control"
+            value={this.state.title}
+            onChange={this.handleChangeTitle.bind(this)}/>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group">
+            <label>Content:</label>
+            <input type="text" className="form-control"
+            value={this.state.content}
+              onChange={this.handleChangeContent.bind(this)}/>
+          </div>
+        </div>
+      </div><br />
+      <div className="form-group">
+        <button className="btn btn-primary"
+          onClick={this.handleClick.bind(this)}>Save
+        </button>
+      </div>
+      <hr />
+      <div className="form-group ">
+        <button className="btn btn-danger"
+          onClick={this.handleClickDelete.bind(this)}>Delete
+        </button>
+      </div>
+      <hr />
+    
     </div>
-    <hr />
-    <div class="panel-body">
-        <form action="/tasks/{{$task_id}}" method="POST">
-        @method('PUT')
-        @csrf
-        <div class="form-group">
-            <label for="title" class="col-sm-3 control-label">title</label>
-            <div class="col-sm-6">
-                <input id="task-title" class="form-control" required="required" name="title" type="text" 
-                value="{{$task["title"] }}" />
-        </div>
-        <div class="form-group">
-            <label for="content" class="col-sm-3 control-label">content</label>
-            <div class="col-sm-6">
-                <input id="task-content" class="form-control" name="content" type="text" 
-                value="{{$task["content"] }}" />
-            </div>
-        </div>
-        <hr />       
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-6">
-                <input class="btn btn-primary" type="submit" value="保存">
-            </div>
-        </div>
-        </form>
-        <hr />
-        <!-- delete -->
-        <div class="form-group">
-            <div class="col-sm-6">
-                <form action="/tasks/{{$task_id}}" method="POST">
-                    @method('DELETE')
-                    @csrf  
-                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete">                  
-                </form>
+    )
+  }  
 
-            </div>
-        </div>         
-    </div>
-    <hr />
-    <br />
-    <div class="panel-footer">
-    </div>
-</div>
+}
+ReactDOM.render(<Page />, document.getElementById('app'));
+</script>
 
 @endsection
