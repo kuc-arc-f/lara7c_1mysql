@@ -1,6 +1,5 @@
 <?php
 //タスク
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -8,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\Libs\LibPagenate;
+use App\Libs\LibAuth;
 //
 class TasksController extends Controller
 {
@@ -15,14 +15,14 @@ class TasksController extends Controller
    *
    **************************************/
   public function __construct(){
-    $this->middleware('auth');
+//    $this->middleware('auth');
   }
   /**************************************
    *
    **************************************/
   public function index()
   {
-//exit();
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     $page = 1;
     if(isset($_GET['page'])){
       $page = $_GET['page'];
@@ -37,6 +37,7 @@ class TasksController extends Controller
    **************************************/
   public function create()
   {
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     return view('tasks/create')->with('task',  null);
   }
   /**************************************
@@ -80,6 +81,7 @@ class TasksController extends Controller
    **************************************/
   public function edit($id)
   {
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     $task = Task::find($id);
     return view('tasks/edit')->with([
       'task'=>$task, 'task_id'=>$id

@@ -17,7 +17,7 @@ class TestAuthController extends Controller
    *
    **************************************/
   public function __construct(){
-    $this->middleware('auth');
+//    $this->middleware('auth');
   }
   /**************************************
    *
@@ -79,7 +79,8 @@ exit();
 var_dump($value );
     */
     $data = $request->session()->all();
-var_dump($data );
+//var_dump($data["normal_user"] );
+var_dump($data);
 //exit();
     return view('test_auth/index')->with('tasks', [] );
   }           

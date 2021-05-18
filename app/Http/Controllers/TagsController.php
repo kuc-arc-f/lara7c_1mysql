@@ -1,6 +1,4 @@
 <?php
-//タスク
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -15,15 +13,13 @@ class TagsController extends Controller
    *
    **************************************/
   public function __construct(){
-    $this->middleware('auth');
   }
   /**************************************
    *
    **************************************/
   public function index()
   {
-//exit();
-
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     $items = Tag::orderBy('id', 'desc')->get();
 //var_dump($items); ->toArray()
     return view('tags/index')->with('items', $items

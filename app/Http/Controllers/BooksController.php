@@ -9,14 +9,14 @@ use Log;
 class BooksController extends Controller
 {
   public function __construct(){
-      $this->middleware('auth');
-}
+//      $this->middleware('auth');
+  }
   /**************************************
    *
    **************************************/
   public function index()
   {
-//var_dump("#index");
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     $page = 1;
     if(isset($_GET['page'])){
     $page = $_GET['page'];
@@ -31,7 +31,8 @@ class BooksController extends Controller
    **************************************/
   public function create()
   {
-      return view('books/create')->with('book', new Book());
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
+    return view('books/create')->with('book', new Book());
   }    
   /**************************************
    *
@@ -63,6 +64,7 @@ class BooksController extends Controller
 //        $book = Book::find($id);
 //debug_dump($book );
 //exit();
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     return view('books/edit')->with('book_id', $id);
   }    
   /**************************************

@@ -15,14 +15,13 @@ class CategoryController extends Controller
    *
    **************************************/
   public function __construct(){
-    $this->middleware('auth');
   }
   /**************************************
    *
    **************************************/
   public function index()
   {
-//exit();
+    if($this->auth_check('normal_user')== NULL){ return redirect('/login'); }
     $page = 1;
     if(isset($_GET['page'])){
       $page = $_GET['page'];
